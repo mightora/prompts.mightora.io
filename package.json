@@ -1,0 +1,15 @@
+{
+  "name": "mightora-prompt-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A browser-first prompt builder with static SEO pages and offline edition.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.cjs",
+    "verify": "node scripts/verify.mjs",
+    "check": "npm test && npm run build && npm run verify"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

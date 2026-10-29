@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1725">
+  <meta name="description" content="Build clearer prompts for ChatGPT, Microsoft Copilot, Claude and other AI assistants. Free guided prompt builder, reusable roles, examples and practical guides. No sign-in required.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mightora Prompt Builder | Better prompts, clearer results">
+  <meta property="og:description" content="A free, private, browser-based prompt builder with reusable AI profiles and task templates.">
+  <meta property="og:url" content="https://prompts.mightora.io/">
+  <meta property="og:image" content="https://prompts.mightora.io/assets/mightora-logo.png">
+  <link rel="canonical" href="https://prompts.mightora.io/">
+  <link rel="icon" type="image/png" href="./assets/mightora-logo.png">
+  <title>Mightora Prompt Builder | Free AI Prompt Generator & Templates</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mightora/shared-ui@main/shared.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mightora Prompt Builder","url":"https://prompts.mightora.io/","applicationCategory":"ProductivityApplication","operatingSystem":"Web browser","description":"A free guided prompt generator for AI assistants with reusable profiles and templates.","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"author":{"@type":"Person","name":"Ian Tweedie"},"isAccessibleForFree":true}</script>
+  <script src="./footer-patch.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/gh/mightora/shared-ui@main/components.js" defer></script>
+  <script src="./catalogue.js" defer></script>
+  <script src="./engine.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <mightora-header site-name="Prompt Builder" site-url="/" theme-key="mightora-prompts-theme"
+    logo-light="https://raw.githubusercontent.com/mightora/mightora.io/main/static/images/mightoraIoLogo4-200x900.png"
+    logo-dark="https://raw.githubusercontent.com/mightora/mightora.io/main/static/images/mightoraIoLogo4-200x900.png"
+    nav-links='[{"label":"Build","url":"/#builder"},{"label":"Templates","url":"/#templates"},{"label":"Guides","url":"/guides/"},{"label":"Examples","url":"/examples/"},{"label":"Mightora.io ↗","url":"https://mightora.io","ext":true}]'>
+    <div class="fallback-header container">
+      <a href="/" class="fallback-brand"><img src="./assets/mightora-logo.png" alt="Mightora full logo"><span>Prompt Builder</span></a>
+      <nav aria-label="Main navigation"><a href="#builder">Build</a><a href="#templates">Templates</a><a href="./guides/">Guides</a><a href="./examples/">Examples</a></nav>
+    </div>
+  </mightora-header>
+  <nav class="quick-jump-nav" aria-label="On this page"><div class="container quick-links">
+    <a href="#builder">Prompt builder</a><a href="#templates">Task templates</a><a href="#how-it-works">How it works</a><a href="#questions">FAQs</a><a href="#privacy">Privacy</a>
+  </div></nav>
+
+  <main id="main">
+    <section class="hero surface-noise">
+      <div class="container hero-grid">
+        <div>
+          <p class="kicker"><span class="kicker-mark"></span> FREE • OPEN SOURCE • NO SIGN-IN</p>
+          <h1>Better prompts.<br><em>Clearer results.</em></h1>
+          <p class="hero-intro">Turn what you are trying to achieve into a useful AI prompt. Choose a working role, pick a task, add your context, and take the result to the assistant you already use.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#builder">Build a prompt <span aria-hidden="true">↗</span></a><a class="btn btn-quiet" href="#templates">Explore templates</a></div>
+          <div class="hero-proof"><span>Works with ChatGPT, Copilot, Claude and more</span><span>•</span><span>Runs in your browser</span></div>
+        </div>
+        <div class="hero-preview" aria-label="An example of a structured AI prompt">
+          <div class="preview-top"><span class="window-dots"><i></i><i></i><i></i></span><span>THE ANATOMY OF A GOOD PROMPT</span><span class="preview-spark">✦</span></div>
+          <div class="prompt-stack"><div class="prompt-line"><span class="line-number">01</span><span class="line-key">ROLE</span><span class="line-value">Who should the AI be?</span></div><div class="prompt-line"><span class="line-number">02</span><span class="line-key">OBJECTIVE</span><span class="line-value">What does success look like?</span></div><div class="prompt-line"><span class="line-number">03</span><span class="line-key">CONTEXT</span><span class="line-value">What does it need to know?</span></div><div class="prompt-line"><span class="line-number">04</span><span class="line-key">OUTPUT</span><span class="line-value">How should it respond?</span></div><div class="prompt-line"><span class="line-number">05</span><span class="line-key">CHECKS</span><span class="line-value">How can it avoid mistakes?</span></div></div>
+          <div class="preview-foot"><span class="online-dot"></span> Structured enough to reuse. Flexible enough to adapt.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="builder" class="section builder-section container">
+      <div class="section-heading"><div><p class="eyebrow">01 / THE BUILDER</p><h2>Make the prompt your own.</h2><p>Start with a task or work from scratch. The result updates as you type.</p></div><span class="section-label">YOUR WORKSPACE</span></div>
+      <div class="builder-grid">
+        <div class="builder-form panel">
+          <div class="step-heading"><span class="step-number">1</span><div><h3>Choose a starting point</h3><p>Pick a reusable role and task.</p></div></div>
+          <div class="form-grid">
+            <div class="field"><label for="profile-picker">AI working profile</label><select id="profile-picker"></select></div>
+            <div class="field"><label for="task-picker">Task template</label><select id="task-picker"></select></div>
+          </div>
+          <p id="template-context" class="help-text">Use a template or start from scratch.</p>
+          <details id="profile-editor" class="profile-editor"><summary>Customise this role <span aria-hidden="true">↗</span></summary><div class="profile-fields">
+            <div class="field"><label for="profile-name">Profile name</label><input id="profile-name" maxlength="80"></div>
+            <div class="field"><label for="profile-role">Role</label><input id="profile-role" maxlength="250" placeholder="An experienced researcher"></div>
+            <div class="field"><label for="profile-expertise">Expertise</label><textarea id="profile-expertise" maxlength="600" rows="2"></textarea></div>
+            <div class="field"><label for="profile-approach">How this profile should work</label><textarea id="profile-approach" maxlength="1000" rows="3"></textarea></div>
+            <div class="inline-actions"><button type="button" class="btn btn-small btn-outline" id="save-profile">Save as new profile</button><button type="button" class="btn btn-small btn-quiet" id="delete-profile">Delete saved profile</button></div>
+            <p class="help-text">Custom profiles are saved only in this browser. Edits preview immediately; saving creates a new profile.</p>
+          </div></details>
+          <div class="form-divider"></div>
+          <div class="step-heading"><span class="step-number">2</span><div><h3>Give it some direction</h3><p>Specific details help produce more relevant results.</p></div></div>
+          <div class="field"><label for="objective">What do you want to achieve? <span class="required">Required for a personalised prompt</span></label><textarea id="objective" rows="3" maxlength="2500" placeholder="e.g. Help me plan a 30-minute workshop for new managers about giving useful feedback"></textarea></div>
+          <div class="field"><label for="context">Background and context</label><textarea id="context" rows="3" maxlength="5000" placeholder="Who is involved? What has already happened? What matters most?"></textarea></div>
+          <div class="form-grid"><div class="field"><label for="audience">Audience</label><input id="audience" maxlength="400" placeholder="e.g. non-technical leaders"></div><div class="field"><label for="format">Preferred output</label><select id="format"><option>Clear sections with headings</option><option>Concise bullet points</option><option>Step-by-step plan</option><option>Comparison table</option><option>Detailed report</option><option>Checklist</option><option>Plain-language explanation</option></select></div></div>
+          <div class="form-grid"><div class="field"><label for="tone">Tone</label><select id="tone"><option>Clear and professional</option><option>Friendly and conversational</option><option>Direct and concise</option><option>Analytical and evidence-led</option><option>Supportive and encouraging</option><option>Formal and authoritative</option></select></div><div class="field"><label for="constraints">Constraints or things to avoid</label><textarea id="constraints" rows="2" maxlength="5000" placeholder="e.g. UK English, under 500 words"></textarea></div></div>
+          <div class="field"><label for="material">Source material (optional)</label><textarea id="material" rows="3" maxlength="12000" placeholder="Paste notes or reference text here. This stays in the browser until you copy it elsewhere."></textarea></div>
+          <div class="form-divider"></div>
+          <div class="step-heading"><span class="step-number">3</span><div><h3>Set the quality bar</h3><p>Choose how the AI should handle gaps and evidence.</p></div></div>
+          <div class="checks"><label class="check-row"><input type="checkbox" id="clarify" checked><span><strong>Ask clarifying questions</strong><small>If essential information is missing</small></span></label><label class="check-row"><input type="checkbox" id="sources"><span><strong>Request sources where relevant</strong><small>Ask for verifiable references, not invented citations</small></span></label><label class="check-row"><input type="checkbox" id="checklist" checked><span><strong>Check the result against the brief</strong><small>Encourage a useful final quality check</small></span></label></div>
+          <button id="reset-builder" class="text-button" type="button">↺ Reset fields</button>
+        </div>
+        <aside class="output-panel panel" aria-label="Your generated prompt"><div class="output-header"><div><p class="eyebrow">LIVE OUTPUT</p><h3>Your ready-to-use prompt</h3></div><span class="output-tag" id="task-label">Custom prompt</span></div>
+          <div class="output-description"><span class="online-dot"></span><span>Updates automatically as you make changes</span></div>
+          <label class="visually-hidden" for="prompt-output">Generated prompt</label><textarea id="prompt-output" class="output-code" readonly spellcheck="false" rows="23"></textarea>
+          <div class="output-meta"><span id="prompt-size">0 characters</span><span>No AI model is contacted</span></div>
+          <div class="output-actions"><button type="button" id="copy-prompt" class="btn btn-primary">Copy prompt <span aria-hidden="true">↗</span></button><button type="button" id="download-prompt" class="btn btn-outline">Download .md</button><button type="button" id="download-text" class="btn btn-quiet">.txt</button></div>
+          <p id="action-status" class="status-message" role="status" aria-live="polite">Ready when you are. Add your objective to personalise the prompt.</p>
+          <div class="output-tip"><strong>What next?</strong><p>Paste your prompt into the AI assistant of your choice. Review its output, check important facts, and refine your instructions as needed.</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="templates" class="section section-alt"><div class="container"><div class="section-heading"><div><p class="eyebrow">02 / A HEAD START</p><h2>Start with the work you need to do.</h2><p>Practical starting points that you can adapt for any AI assistant.</p></div><a href="./examples/" class="text-link">See worked examples ↗</a></div><div class="template-tools"><div class="field search-field"><label for="template-search">Find a template</label><input id="template-search" type="search" placeholder="Search tasks, e.g. meeting or analysis"></div><span id="template-count" class="template-count">12 templates</span></div><div class="filters" id="category-filters" role="group" aria-label="Filter templates by category"></div><div id="template-grid" class="template-grid"><p>Loading templates…</p></div><noscript><p>The interactive template filter requires JavaScript. You can still read our <a href="./examples/">examples</a> and <a href="./guides/">prompt-writing guides</a>.</p></noscript></div></section>
+
+    <section id="how-it-works" class="section container"><div class="section-heading"><div><p class="eyebrow">03 / THE METHOD</p><h2>A simple structure, not a magic formula.</h2><p>The best prompts give an AI enough direction to be genuinely helpful.</p></div></div><div class="method-grid"><article class="method-card"><span>01</span><h3>Give it a role</h3><p>Describe the expertise and working style you want the assistant to apply. A role is guidance, not a guarantee of expertise.</p></article><article class="method-card"><span>02</span><h3>Explain the task</h3><p>Say what you need, who it is for, and what successful output would contain. Include your constraints and relevant context.</p></article><article class="method-card"><span>03</span><h3>Review and refine</h3><p>Check factual claims, test the result against your objective, and ask follow-up questions. Human judgement remains essential.</p></article></div><div class="learn-banner"><div><h3>New to AI prompting?</h3><p>Our plain-English guide covers roles, context, output formats, examples and common mistakes.</p></div><a href="./guides/" class="btn btn-outline">Read the guide ↗</a></div></section>
+
+    <section id="questions" class="section section-alt"><div class="container narrow"><p class="eyebrow">04 / COMMON QUESTIONS</p><h2>Questions worth asking.</h2><details class="faq"><summary>What is an AI prompt?</summary><p>A prompt is the instruction and context you give an AI assistant. It may be a simple question or a more structured brief describing a role, task, constraints and desired output.</p></details><details class="faq"><summary>Does this work with ChatGPT, Copilot and Claude?</summary><p>Yes. The builder creates plain-text instructions that you can copy into many text-based AI assistants. Different models may interpret them differently, so review the result.</p></details><details class="faq"><summary>Does Mightora send my prompt to an AI service?</summary><p>No. The prompt is assembled locally in your browser. Nothing is sent to an AI model by this website. You choose whether and where to paste it afterwards.</p></details><details class="faq"><summary>Can I reuse my own AI profiles?</summary><p>Yes. Edit a role and save it as a custom profile. Custom profiles are stored locally in that browser, not in a cloud account, and may disappear if browser data is cleared.</p></details><details class="faq"><summary>Is the tool free and available offline?</summary><p>Yes. There is no account or subscription. You can also download the self-contained <a href="./downloads/mightora-prompt-builder-offline.html">offline HTML edition</a> or <a href="./downloads/mightora-prompt-builder-offline.zip">offline ZIP</a>.</p></details></div></section>
+
+    <section id="privacy" class="section container"><div class="privacy-grid"><div><p class="eyebrow">05 / BUILT FOR CONTROL</p><h2>Your ideas stay with you.</h2><p>The builder runs in your browser. It does not require an account, collect prompt text through an application backend, or contact an AI API.</p><p>Saved custom profiles use browser local storage. Online branding loads Mightora assets from a CDN and GitHub; the offline edition embeds its assets.</p><div class="inline-actions"><a href="./downloads/mightora-prompt-builder-offline.html" class="btn btn-primary" download>Download offline HTML</a><a href="./downloads/mightora-prompt-builder-offline.zip" class="btn btn-outline" download>Offline ZIP</a></div><p class="help-text">Offline Edition – No Internet Connection Required</p></div><div class="privacy-card"><h3>Network transparency</h3><p id="network-summary">The online edition loads shared Mightora branding assets. Open Developer Tools to inspect all requests.</p><ol><li>Press F12 to open Developer Tools.</li><li>Open the <strong>Network</strong> tab and enable <strong>Preserve log</strong>.</li><li>Reload and inspect requests and external domains.</li></ol><p class="help-text">The on-page resource summary uses the browser Performance API and is incomplete; it does not replace Developer Tools or a security audit.</p><a href="./privacy/">Read the privacy and network notes ↗</a></div></div></section>
+  </main>
+
+  <mightora-author config-url="/config.json"><div class="author-section-overlay"><div class="author-section-inner"><div class="author-photos"><img src="./assets/ian-tweedie.png" alt="Ian Tweedie" class="author-avatar"></div><div class="author-text"><h2 class="author-heading">Built by TechTweedie</h2><p class="author-bio">Mightora Prompt Builder is a free, open-source tool created by <strong>Ian Tweedie (TechTweedie)</strong>, a technology consultant and developer based in North East England. Ian builds practical tools that help people work with technology confidently.</p><div class="author-links"><a href="https://techtweedie.github.io" class="author-link" target="_blank" rel="noopener">Blog</a><a href="https://github.com/itweedie" class="author-link" target="_blank" rel="noopener">GitHub</a></div></div></div></div></mightora-author>
+  <section class="trust-band" aria-label="Open-source evidence"><div class="container"><p>Open-source and independently inspectable. Workflow badges link to GitHub evidence, not a security certification.</p><div class="badge-row"><a href="https://github.com/mightora/prompts.mightora.io/actions/workflows/pages.yml"><img alt="Build and deploy workflow status" src="https://github.com/mightora/prompts.mightora.io/actions/workflows/pages.yml/badge.svg"></a><a href="https://github.com/mightora/prompts.mightora.io/actions/workflows/codeql.yml"><img alt="CodeQL workflow status" src="https://github.com/mightora/prompts.mightora.io/actions/workflows/codeql.yml/badge.svg"></a><a href="https://github.com/mightora/prompts.mightora.io/blob/main/LICENSE"><img alt="MIT licence" src="https://img.shields.io/github/license/mightora/prompts.mightora.io"></a><a href="https://github.com/mightora/prompts.mightora.io"><img alt="Public source code on GitHub" src="https://img.shields.io/badge/source-GitHub-0e1726"></a></div></div></section>
+  <mightora-footer local-yaml-url="/footer.yaml"><div class="container"><div class="footer-bottom"><div class="footer-copy">© <span class="footer-year">2026</span> Mightora Prompt Builder. Free and open source, by <a href="https://mightora.io">Mightora</a>.</div><div class="footer-bottom-links"><a href="/privacy/">Privacy</a> · <a href="https://github.com/mightora/prompts.mightora.io">Source</a> · <a href="https://github.com/mightora/prompts.mightora.io/blob/main/LICENSE">MIT licence</a></div></div></div></mightora-footer>
+</body>
+</html>
