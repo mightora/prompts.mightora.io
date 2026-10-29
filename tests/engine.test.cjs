@@ -19,6 +19,7 @@ test('every template generates a useful structured prompt', () => {
   for (const task of catalogue.tasks) {
     const output = engine.compose({ profile: catalogue.profiles[0], task, objective: 'Draft an approach for a local charity', context: 'Small volunteer team', audience: 'Trustees', format: 'Checklist', tone: 'Plain English', clarify: true, checklist: true });
     assert.match(output, /# Role\n/);
+    assert.match(output, /^# Role\nAct as a practical, thoughtful assistant\./);
     assert.match(output, /# Objective\nDraft an approach for a local charity/);
     assert.match(output, /Small volunteer team/);
     assert.match(output, /Intended audience: Trustees/);

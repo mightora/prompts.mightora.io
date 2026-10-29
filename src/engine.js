@@ -4,12 +4,13 @@
   function compose(input) {
     const profile = input.profile || {};
     const task = input.task || {};
+    const role = (clean(profile.role, 250) || 'a thoughtful, practical assistant').replace(/^(A|An|The)\b/, match => match.toLowerCase());
     const objective = clean(input.objective, 2500) || clean(task.instruction, 2500) || 'Help me with this task.';
     const format = clean(input.format, 120) || 'Clear sections with useful headings';
     const tone = clean(input.tone, 120) || 'Clear and professional';
     const lines = [
       '# Role',
-      `Act as ${clean(profile.role, 250) || 'a thoughtful, practical assistant'}.`,
+      `Act as ${role}.`,
       clean(profile.expertise, 600) ? `Bring expertise in: ${clean(profile.expertise, 600)}.` : '',
       clean(profile.approach, 1000),
       '', '# Objective', objective,

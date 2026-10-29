@@ -62,6 +62,9 @@
     el('prompt-size').textContent = `${output.length.toLocaleString('en-GB')} characters`;
     el('template-context').textContent = selectedTask().description;
     el('task-label').textContent = selectedTask().name;
+    if (el('objective').value.trim() && document.activeElement && fields.includes(document.activeElement.id)) {
+      status('Prompt updated. Ready to copy or download.');
+    }
   }
   function chooseTask(id) {
     if (!catalogue.tasks.some(t => t.id === id)) return;
