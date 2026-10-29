@@ -100,7 +100,7 @@ let offline = index
   .replace(/<link rel="stylesheet" href="\.\/styles\.css">/, `<style>${embeddedCss}\n${from('src/styles.css')}</style>`)
   .replace(/<script src="\.\/footer-patch\.js" defer><\/script>/, '')
   .replace(/<script src="https:\/\/cdn\.jsdelivr\.net[^>]+><\/script>\s*/g, '')
-  .replace(/<script src="\.\/(catalogue|engine|app)\.js" defer><\/script>/g, (_, name) => `<script>${from(`src/${name}.js`).replace(/<\/script/gi, '<\\/script')}</script>`)
+  .replace(/<script src="\.\/(catalogue|engine|app)\.js" defer><\/script>/g, '')
   .replace(/<section class="trust-band"[\s\S]*?<\/section>/, '')
   .replaceAll('./assets/mightora-logo.png', logo)
   .replaceAll('./assets/ian-tweedie.png', portrait)
@@ -113,6 +113,11 @@ let offline = index
   .replace('href="/" class="fallback-brand"', 'href="#main" class="fallback-brand"')
   .replace('<main id="main">', '<div class="offline-ribbon">Offline Edition – No Internet Connection Required</div><main id="main">');
 offline = offline.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'">`);
+// Inline scripts have no `defer` behaviour, so place the shared app scripts
+// after the controls. This works in file:// as well as when served over HTTPS.
+const offlineScripts = ['catalogue', 'engine', 'app']
+  .map(name => `<script>${from(`src/${name}.js`).replace(/<\/script/gi, '<\\/script')}</script>`).join('\n');
+offline = offline.replace('</body>', `${offlineScripts}</body>`);
 file('downloads/mightora-prompt-builder-offline.html', offline);
 const offlineFolder = join(root, '.offline-package');
 rmSync(offlineFolder, { recursive: true, force: true });

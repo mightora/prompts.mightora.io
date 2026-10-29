@@ -25,6 +25,7 @@ assert.match(offline, /data:image\/png;base64,/);
 assert.match(offline, /connect-src 'none'/);
 assert.match(offline, /function compose\(/);
 assert.match(offline, /MIGHTORA_CATALOGUE/);
+assert.ok(offline.indexOf('MIGHTORA_CATALOGUE') > offline.indexOf('</main>'), 'Offline scripts must run after the page controls');
 assert.doesNotMatch(offline, /<script src=/);
 assert.doesNotMatch(offline, /<link rel="stylesheet"/);
 assert.doesNotMatch(offline, /url\(['"]https?:\/\//);
