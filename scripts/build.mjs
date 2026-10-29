@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from 'node:fs'
 import { join, resolve } from 'node:path';
 import vm from 'node:vm';
 import { createZip } from './zip.mjs';
+import { createHash } from 'node:crypto';
 
 const root = resolve(import.meta.dirname, '..');
 const from = path => readFileSync(join(root, path), 'utf8');
@@ -14,6 +15,14 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const file = (path, contents) => { const target = join(dest, path); mkdirSync(resolve(target, '..'), { recursive: true }); writeFileSync(target, contents); };
 const index = from('src/index.html');
+function versionAssets(html) {
+  for (const name of ['app.js', 'engine.js', 'catalogue.js', 'styles.css', 'footer-patch.js']) {
+    const version = createHash('sha256').update(from(`src/${name}`)).digest('hex').slice(0, 10);
+    html = html.replaceAll(`"./${name}"`, `"./${name}?v=${version}"`)
+      .replaceAll(`"/${name}"`, `"/${name}?v=${version}"`);
+  }
+  return html;
+}
 const header = index.match(/<mightora-header\b[\s\S]*?<\/mightora-header>/)[0]
   .replaceAll('src="./assets/', 'src="/assets/')
   .replaceAll('href="./guides/', 'href="/guides/')
@@ -32,7 +41,7 @@ function documentPage({ path, title, description, eyebrow, heading, intro, html,
   const ld = { '@context': 'https://schema.org', '@type': schema, headline: title, name: title,
     description, url: canonical, author: { '@type': 'Person', name: 'Ian Tweedie' }, publisher: { '@type': 'Organization', name: 'Mightora' } };
   const body = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0c1725"><meta name="description" content="${esc(description)}"><meta name="robots" content="index,follow"><meta property="og:type" content="article"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${canonical}"><link rel="canonical" href="${canonical}"><link rel="icon" type="image/png" href="/assets/mightora-logo.png"><title>${esc(title)} | Mightora Prompt Builder</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mightora/shared-ui@main/shared.css"><link rel="stylesheet" href="/styles.css"><script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script><script src="/footer-patch.js" defer></script><script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js" defer></script><script src="https://cdn.jsdelivr.net/gh/mightora/shared-ui@main/components.js" defer></script></head><body><a class="skip-link" href="#main">Skip to content</a>${header}${noJs}<main class="doc-page" id="main"><div class="doc-hero"><div class="container"><p class="eyebrow">${esc(eyebrow)}</p><h1>${esc(heading)}</h1><p>${esc(intro)}</p></div></div><div class="container doc-body"><article class="doc-content">${html}<p><a href="/#builder" class="btn btn-primary">Open the prompt builder ↗</a></p></article><aside class="doc-side"><h3>Explore Mightora Prompts</h3><a href="/#builder">Build a prompt</a><a href="/guides/">Writing guides</a><a href="/examples/">Task examples</a><a href="/profiles/">AI profiles</a><a href="/privacy/">Privacy and offline use</a>${links.map(l => `<a href="${esc(l.url)}">${esc(l.title)}</a>`).join('')}</aside></div></main>${author}${trust}${footer}</body></html>`;
-  const withCsp = addCsp(body);
+  const withCsp = addCsp(versionAssets(body));
   const localPath = path === '/' ? 'index.html' : `${path.slice(1)}index.html`;
   file(localPath, withCsp);
   return path;
@@ -45,7 +54,7 @@ rmSync(dest, { recursive: true, force: true });
 mkdirSync(dest, { recursive: true });
 for (const path of ['catalogue.js', 'engine.js', 'app.js', 'styles.css', 'footer-patch.js', 'footer.yaml', 'config.json']) file(path, from('src/' + path));
 cpSync(join(root, 'src/assets'), join(dest, 'assets'), { recursive: true });
-file('index.html', addCsp(index));
+file('index.html', addCsp(versionAssets(index)));
 file('CNAME', 'prompts.mightora.io\n');
 file('.nojekyll', '');
 
